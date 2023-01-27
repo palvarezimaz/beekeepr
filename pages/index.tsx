@@ -1,9 +1,22 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Title from "../components/Title"
+import { getProducts, Product } from "../lib/products"
+
+interface HomePageProps {
+  products: Product[]
+}
+
+export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
+  const products = await getProducts()
+  return {
+    props: { products },
+    revalidate: 5 * 60,
+  }
+}
 
 
-const HomePage: NextPage = () => {
+function HomePage({ products }: HomePageProps): JSX.Element {
   return (
     <>
       <Head>
@@ -11,7 +24,13 @@ const HomePage: NextPage = () => {
       </Head>
       <main className="p-3">
         <Title>Beekeeper`s Journal E-Shop</Title>
-        <p>something</p>
+        <ul>
+          {products.map((product: Product) => (
+            <li key={product.id}>
+              {product.title}
+            </li>
+          ))}
+        </ul>
       </main>
     </>
   )

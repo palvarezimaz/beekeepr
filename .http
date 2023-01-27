@@ -1,0 +1,3 @@
+GET http://localhost:1337/api/honey-products/1
+
+GET http://localhost:1337/admin/content-manager/collectionType/api::honey-product.honey-product?page=1&pageSize=10&sort=title:ASC&plugins[i18n][locale]=en
