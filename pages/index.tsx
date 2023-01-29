@@ -1,5 +1,6 @@
 import type { GetStaticProps } from 'next'
 import Head from 'next/head'
+import Link from "next/link"
 import Title from "../components/Title"
 import { getProducts, Product } from "../lib/products"
 
@@ -27,7 +28,9 @@ function HomePage({ products }: HomePageProps): JSX.Element {
         <ul>
           {products.map((product: Product) => (
             <li key={product.id}>
-              {product.title}
+              <Link href={`/products/${product.id}`}>
+                {product.title}
+              </Link>
             </li>
           ))}
         </ul>
