@@ -3,6 +3,7 @@ import { ParsedUrlQuery } from "querystring";
 import Head from "next/head";
 import Title from "../../components/Title";
 import { getProduct, getProducts, Product } from '../../lib/products'
+import { ApiError } from "../../lib/api";
 
 interface ProductPageParams extends ParsedUrlQuery {
   id: string;
@@ -18,15 +19,22 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: products.map((product: Product) => ({
       params: { id: product.id.toString() }
     })),
-    fallback: false
+    fallback: 'blocking'
   }
 }
 
 export const getStaticProps: GetStaticProps<ProductPageProps, ProductPageParams> = async ({ params }) => {
-  const product = await getProduct(params?.id as string)
-  return {
-    props: { product },
-    revalidate: 5 * 60,
+  try {
+    const product = await getProduct(params?.id as string)
+    return {
+      props: { product },
+      // revalidate: 5 * 60,
+    }
+  } catch (err) {
+    if (err instanceof ApiError && err.status === 404) {
+      return { notFound: true };
+    }
+    throw err
   }
 }
 

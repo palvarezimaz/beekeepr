@@ -12,7 +12,7 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
   const products = await getProducts()
   return {
     props: { products },
-    revalidate: 5 * 60,
+    // revalidate: 5 * 60,
   }
 }
 
