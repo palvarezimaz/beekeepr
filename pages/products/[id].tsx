@@ -1,10 +1,9 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
-import Head from "next/head";
 import Image from "next/image";
-import Title from "../../components/Title";
 import { getProduct, getProducts, Product } from '../../lib/products'
 import { ApiError } from "../../lib/api";
+import Page from "../../components/Page";
 
 interface ProductPageParams extends ParsedUrlQuery {
   id: string;
@@ -39,29 +38,23 @@ export const getStaticProps: GetStaticProps<ProductPageProps, ProductPageParams>
   }
 }
 
-export default function productPage({ product }: ProductPageProps) {
+export default function productPage({ product }: ProductPageProps): JSX.Element {
   return (
-    <>
-      <Head>
-        <title>Beekeeper`s Journal E-Shop</title>
-      </Head>
-      <main className="px-6 py-4">
-        <Title>{product.title}</Title>
-        <div className="flex flex-col lg:flex-row">
-          <div>
-            <Image src={product.imageUrl} alt=""
-              width={640} height={480}
-            />
-          </div>
-          <div className="flex-1 lg:ml-4">
-            <p className="text-sm">Description:
-              <br />
-              {product.description}
-            </p>
-            <p className="text-lg font-bold mt-2">Price: {product.price}</p>
-          </div>
+    <Page title={product.title}>
+      <div className="flex flex-col lg:flex-row">
+        <div>
+          <Image src={product.imageUrl} alt=""
+            width={640} height={480}
+          />
         </div>
-      </main>
-    </>
+        <div className="flex-1 lg:ml-4">
+          <p className="text-sm">Description:
+            <br />
+            {product.description}
+          </p>
+          <p className="text-lg font-bold mt-2">Price: {product.price}</p>
+        </div>
+      </div>
+    </Page>
   )
 }

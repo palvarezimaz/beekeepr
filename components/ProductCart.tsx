@@ -5,7 +5,7 @@ interface ProductCardProps {
   product: Product
 }
 
-function ProductCard({ product }: ProductCardProps): JSX.Element {
+export default function ProductCard({ product }: ProductCardProps): JSX.Element {
   return (
     <div className="border w-80 shadow hover:shadow-xl">
       <Link href={`/products/${product.id}`}>
@@ -21,5 +21,3 @@ function ProductCard({ product }: ProductCardProps): JSX.Element {
     </div>
   )
 }
-
-export default ProductCard
