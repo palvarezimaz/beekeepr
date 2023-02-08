@@ -4,16 +4,20 @@ export class ApiError extends Error {
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, ApiError)
     }
-    this.name = 'ApiError'
+    this.name = 'ApiError';
     this.status = status
   }
 }
 
-
-export async function fetchJson(url: string, option?: RequestInit): Promise<any> {
-  const response = await fetch(url, option)
+export async function fetchJson(url: string, options?: RequestInit): Promise<any> {
+  const response = await fetch(url, options)
+  console.log(response)
   if (!response.ok) {
     throw new ApiError(url, response.status)
   }
-  return response.json()
+  return await response.json()
 }
+
+
+
+

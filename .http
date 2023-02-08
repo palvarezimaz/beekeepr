@@ -1,7 +1,13 @@
 GET http://localhost:1337/api/honey-products/1?populate=*
 
+####
 
 
-# uploads/
 
-# small_honey1_1a8cc3e5eb.jpg
+POST http://localhost:1337/api/auth/local
+Content-Type: application/json
+
+{
+  "identifier": "maddie@example.com",
+  "password": "Maddie123"
+}
