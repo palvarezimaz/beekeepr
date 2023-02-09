@@ -4,6 +4,8 @@ import Image from "next/image";
 import { getProduct, getProducts, Product } from '../../lib/products'
 import { ApiError } from "../../lib/api";
 import Page from "../../components/Page";
+import { useUser } from "../../hooks/user";
+
 
 interface ProductPageParams extends ParsedUrlQuery {
   id: string;
@@ -12,6 +14,8 @@ interface ProductPageParams extends ParsedUrlQuery {
 interface ProductPageProps {
   product: Product
 }
+
+
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const products = await getProducts()
@@ -38,8 +42,10 @@ export const getStaticProps: GetStaticProps<ProductPageProps, ProductPageParams>
   }
 }
 
-export default function productPage({ product }: ProductPageProps): JSX.Element {
+export default function ProductPage({ product }: ProductPageProps): JSX.Element {
+  const user = useUser();
   return (
+
     <Page title={product.title}>
       <div className="flex flex-col lg:flex-row">
         <div>
@@ -52,7 +58,9 @@ export default function productPage({ product }: ProductPageProps): JSX.Element 
             <br />
             {product.description}
           </p>
-          <p className="text-lg font-bold mt-2">Price: {product.price}</p>
+          <p className="text-lg font-bold mt-2">Price: {product.price}
+          </p>
+          {/* <p>Special products for {user.name}</p> */}
         </div>
       </div>
     </Page>

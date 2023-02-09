@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Product } from '../lib/products'
+
 interface ProductCardProps {
   product: Product
 }
