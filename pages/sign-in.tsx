@@ -7,7 +7,8 @@ import { useRouter } from "next/router";
 import { fetchJson } from "../lib/api";
 
 
-function SignInPage() {
+function SignInPage(): JSX.Element {
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [status, setStatus] = useState({ loading: false, error: false })
@@ -17,24 +18,19 @@ function SignInPage() {
     setStatus({ loading: true, error: false })
     try {
       console.log(`submitted ${email}, ${password}`)
-      const response = await fetchJson('http://localhost:1337/api/auth/local', {
+      const response = await fetchJson(`/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ identifier: email, password })
+        body: JSON.stringify({ email, password })
       });
       setStatus({ loading: false, error: false })
       console.log('sign in', response)
+      router.push('/')
     } catch (err) {
       setStatus({ loading: false, error: true })
     }
-
-    // const accepted = await signIn(email, password)
-    // if (accepted) {
-    //   router.push('/')
-    // }
-
   };
   return (
     <Page title="Sign in">

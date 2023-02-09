@@ -1,0 +1,1 @@
+// build the registration page
