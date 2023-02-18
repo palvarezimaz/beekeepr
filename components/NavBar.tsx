@@ -19,6 +19,11 @@ export default function NavBar(): JSX.Element {
         {user ? (
           <>
             <li>
+              <Link href="/cart">
+                Cart
+              </Link>
+            </li>
+            <li>
               {user.name}
             </li>
             <li>
