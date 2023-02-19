@@ -23,7 +23,7 @@ const handleCart: NextApiHandler<CartItem[]> = async (req, res) => {
     return
   }
   try {
-    const cartItems = await fetchJson(`FIX`, {
+    const cartItems = await fetchJson(`${CMS_URL}/api/cart-items}`, {
       headers: { "Authorization": `Bearer ${jwt}` }
     })
     res.status(200).json(cartItems.map(stripCartItem))
