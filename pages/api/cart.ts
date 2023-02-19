@@ -16,3 +16,21 @@ function stripCartItem(cartItem: any): CartItem {
   }
 }
 
+const handleCart: NextApiHandler<CartItem[]> = async (req, res) => {
+  const { jwt } = req.cookies;
+  if (!jwt) {
+    res.status(401).end()
+    return
+  }
+  try {
+    const cartItems = await fetchJson(`FIX`, {
+      headers: { "Authorization": `Bearer ${jwt}` }
+    })
+    res.status(200).json(cartItems.map(stripCartItem))
+
+  } catch (err) {
+    res.status(401).end()
+  }
+}
+
+export default handleCart
